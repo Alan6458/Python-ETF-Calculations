@@ -1,0 +1,1 @@
+Please run in this order: getNames.py, getData.py, ratio.py, dataCount.py or dataCountBest.py
