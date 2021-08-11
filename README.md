@@ -27,8 +27,9 @@ getData.py uses yFinance to get the history of the top 1600 ETFs (from getNames.
   In the while statement, variable "new" is declared as content but without the \n. This is important because in many situations, the \n would be included. Using Yahoo Finance, ticker data for the ETF represented as "new" would be requested as history. You could change the period of time to anything you like, but we'll just request the maximum period available. The if statement on line 16 is extremely important if you're using the Windows operating system, because the file names CON, PRN, AUX, and NUL are forbidden in Windows. If the ETF's name does match the previously mentioned 4 forbidden file names, then it would be changed. This happens after the history is requested because if it was before, then there would be no ETF that matches the name, meaning that the history we would later save will be blank. There would also be an error that says the file is not found.
   In the final few lines, we use the .to_csv function to put the data we collected into a .csv file. Make sure to change the path string to a path you already have, or it could make an additional unwanted folder. If you're wondering why I'm using .csv files instead of .txt files, it's because it's much easier to read the data from a CSV file than a text file. The while loop at the start could be changed into a for loop, just change it to "for i in range(len(content))" and delete the i += 1 at the end.
   
-The CSV file should look like this (I used the Rainbow CSV plugin in Pycharm):
+The CSV file should look like this:
 ![Graph Example Image](https://github.com/Alan6458/Python-ETF-Calculations/blob/main/Images/CSV%20Example.png?raw=true)
+I used the Rainbow CSV plugin in Pycharm, so yours might look a bit different.
 
 
 ratio.py uses the Calmar ratio (Portfolio Return/Annual Rate of Return) to make a list of ETFs from getNames.py with CSV files from getData.py with the highest Calmar ratio.
