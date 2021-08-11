@@ -28,7 +28,7 @@ getData.py uses yFinance to get the history of the top 1600 ETFs (from getNames.
   In the final few lines, we use the .to_csv function to put the data we collected into a .csv file. Make sure to change the path string to a path you already have, or it could make an additional unwanted folder. If you're wondering why I'm using .csv files instead of .txt files, it's because it's much easier to read the data from a CSV file than a text file. The while loop at the start could be changed into a for loop, just change it to "for i in range(len(content))" and delete the i += 1 at the end.
   
 The CSV file should look like this (I used the Rainbow CSV plugin in Pycharm):
-![Graph Example Image](/images/CSV Example.png)
+![Graph Example Image](https://github.com/Alan6458/Python-ETF-Calculations/blob/main/Images/CSV%20Example.png?raw=true)
 
 
 ratio.py uses the Calmar ratio (Portfolio Return/Annual Rate of Return) to make a list of ETFs from getNames.py with CSV files from getData.py with the highest Calmar ratio.
@@ -45,7 +45,7 @@ dataCount.py optimizes a portfolio through using efficient frontier (with 10 ETF
   First, we can ignore all the functions and come back to them later. The while loop takes ETFs from data.txt and puts them into stock_codes, making sure that there are no repeats. After that, data is read from the CSV files, similar to how it was done earlier. Last of all, one function is used, which uses the other two to calculate the maximum sharpe allocation and the minimum volatility. All of this is put into a text document and printed. A graph would be made and saved to the files, and the program would move to the next set of ETFs to test.
   
 Example of the graph:
-![Graph Example Image](/images/Example.png)
+![Graph Example Image](https://github.com/Alan6458/Python-ETF-Calculations/blob/main/Images/Example.png?raw=true)
 
 See the comments in the files for more information.
 
