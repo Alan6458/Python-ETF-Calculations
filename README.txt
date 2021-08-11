@@ -1,4 +1,14 @@
-Please run in this order: getNames.py, getData.py, ratio.py, dataCount.py or dataCountBest.py
+Please run in this order:
+
+1. getNames.py
+  Scrapes data from a website to obtain the names of the top 1600 ETFs
+2. getData.py
+  Uses yfinance to get the history of the top 1600 ETFs
+3. ratio.py
+  Uses the Calmar ratio to make a list of 100 ETFs with the highest Calmar ratio
+4. dataCount.py or dataCountBest.py
+  Uses randomized efficient frontier to find the combination of ETFs with the largest annualized return and the lowest annualized volatility
+
 
 getNames.py uses the website https://etfdb.com/etfs/country/us/ and scrapes data from the table to get the top 1600 ETF names.
 
@@ -7,13 +17,14 @@ getNames.py uses the website https://etfdb.com/etfs/country/us/ and scrapes data
 
 
 getData.py uses yFinance to get the history of the top 1600 ETFs (from getNames.py) and puts them into CSV files for later use.
+
   In case you don't know, yfinance is a free, open source API that was made after the official Yahoo Finance API was decommissioned in 2015. You can install it using "pip install yfinance" in the terminal, but it already comes preinstalled in Anaconda. The API for yfinance is here: https://pypi.org/project/yfinance/ This time, I'm going to be using the Ticker() function (ticker = yf.Ticker("name of stock")), which accesses ticker data, and the history() function (history = yf.history(period="")), which accesses the history of the ticker. Periods of time (period=) that could be fetched inclued minutes, hours, days, weeks, months, and years (m, h, d, wk, mo, y). A start and end (start= and end=) may also be used. The .download function could be used to fetch data for multiple tickers, but I didn't use it this time. "import yfinance as yf" or "import yfinance" could both be used to import yfinance.
   Using the open() function, getData.py opens Table.txt, which contains the top 1600 or so ETFs that we got from getNames.py. Next, the readlines() function is used to read all the lines in Table.txt and puts those lines into the list "content". Then, the while statement seen on line 9 would repeat the same amount of times as there is EFTs in Table.txt. For example, if there are 1000 ETFs or 1000 lines in Table.txt, it would repeat 1000 times because the length of "content" is 1000.
   In the while statement, variable "new" is declared as content but without the \n. This is important because in many situations, the \n would be included. Using Yahoo Finance, ticker data for the ETF represented as "new" would be requested as history. You could change the period of time to anything you like, but we'll just request the maximum period available. The if statement on line 16 is extremely important if you're using the Windows operating system, because the file names CON, PRN, AUX, and NUL are forbidden in Windows. If the ETF's name does match the previously mentioned 4 forbidden file names, then it would be changed. This happens after the history is requested because if it was before, then there would be no ETF that matches the name, meaning that the history we would later save will be blank. There would also be an error that says the file is not found.
   In the final few lines, we use the .to_csv function to put the data we collected into a .csv file. Make sure to change the path string to a path you already have, or it could make an additional unwanted folder. If you're wondering why I'm using .csv files instead of .txt files, it's because it's much easier to read the data from a CSV file than a text file. The while loop at the start could be changed into a for loop, just change it to "for i in range(len(content))" and delete the i += 1 at the end.
 
 
-ratio.py uses the Calmar ratio (Portfolio Return/Annual Rate of Return) to make a list of ETS from getNames.py with CSV files from getData.py with the highest Calmar ratio.
+ratio.py uses the Calmar ratio (Portfolio Return/Annual Rate of Return) to make a list of ETFs from getNames.py with CSV files from getData.py with the highest Calmar ratio.
 
   First, Table.txt is opened for reading and the content of the file is put into a list called "file". Next, a new variable is created which deletes the \n from file. An if statement detects if the current name is CON, PRN, AUX, or NUL, and if so, changes them to match the file names. The files are read from the row "Close" (but Open, High, Low, and CLose are all acceptable).
   The Annual Return is calculated on row 29. After that, some variables are set for calculating the Maximum Drawdown. The location of the higher number, i, is chosen and because the smaller number must be after that, i1, the location of the smaller number, is set to i. An if statement determines if the difference of i and i1 is greater than the current greatest difference. This would take about one to fifteen seconds to calculate, but after that, the maximum drawdown is turned into a percentage and the final result is calculated.
