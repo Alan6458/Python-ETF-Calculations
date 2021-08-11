@@ -26,6 +26,9 @@ getData.py uses yFinance to get the history of the top 1600 ETFs (from getNames.
   Using the open() function, getData.py opens Table.txt, which contains the top 1600 or so ETFs that we got from getNames.py. Next, the readlines() function is used to read all the lines in Table.txt and puts those lines into the list "content". Then, the while statement seen on line 9 would repeat the same amount of times as there is EFTs in Table.txt. For example, if there are 1000 ETFs or 1000 lines in Table.txt, it would repeat 1000 times because the length of "content" is 1000.
   In the while statement, variable "new" is declared as content but without the \n. This is important because in many situations, the \n would be included. Using Yahoo Finance, ticker data for the ETF represented as "new" would be requested as history. You could change the period of time to anything you like, but we'll just request the maximum period available. The if statement on line 16 is extremely important if you're using the Windows operating system, because the file names CON, PRN, AUX, and NUL are forbidden in Windows. If the ETF's name does match the previously mentioned 4 forbidden file names, then it would be changed. This happens after the history is requested because if it was before, then there would be no ETF that matches the name, meaning that the history we would later save will be blank. There would also be an error that says the file is not found.
   In the final few lines, we use the .to_csv function to put the data we collected into a .csv file. Make sure to change the path string to a path you already have, or it could make an additional unwanted folder. If you're wondering why I'm using .csv files instead of .txt files, it's because it's much easier to read the data from a CSV file than a text file. The while loop at the start could be changed into a for loop, just change it to "for i in range(len(content))" and delete the i += 1 at the end.
+  
+The CSV file should look like this (I used the Rainbow CSV plugin in Pycharm):
+![Graph Example Image](/images/CSV Example.png)
 
 
 ratio.py uses the Calmar ratio (Portfolio Return/Annual Rate of Return) to make a list of ETFs from getNames.py with CSV files from getData.py with the highest Calmar ratio.
@@ -42,7 +45,7 @@ dataCount.py optimizes a portfolio through using efficient frontier (with 10 ETF
   First, we can ignore all the functions and come back to them later. The while loop takes ETFs from data.txt and puts them into stock_codes, making sure that there are no repeats. After that, data is read from the CSV files, similar to how it was done earlier. Last of all, one function is used, which uses the other two to calculate the maximum sharpe allocation and the minimum volatility. All of this is put into a text document and printed. A graph would be made and saved to the files, and the program would move to the next set of ETFs to test.
   
 Example of the graph:
-![graph](https://pic2.zhimg.com/v2-862136476bd6defea1f0e38174a54256_1440w.jpg?source=172ae18b)
+![Graph Example Image](/images/Example.png)
 
 See the comments in the files for more information.
 
