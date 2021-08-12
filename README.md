@@ -4,21 +4,23 @@ Run at your own risk if you do not understand the code at all.
 
 Please run in this order:
 
-1. getNames.py
-  Scrapes data from a website to obtain the names of the top 1600 ETFs
-2. getData.py
-  Uses yfinance to get the history of the top 1600 ETFs
-3. ratio.py
-  Uses the Calmar ratio to make a list of 100 ETFs with the highest Calmar ratio
-4. dataCount.py or dataCountBest.py
-  Uses randomized efficient frontier to find the combination of ETFs with the largest annualized return and the lowest annualized volatility
+1. getNames.py:
+Scrapes data from a website to obtain the names of the top 1600 ETFs
+2. getData.py:
+Uses yfinance to get the history of the top 1600 ETFs
+3. ratio.py:
+Uses the Calmar ratio to make a list of 100 ETFs with the highest Calmar ratio
+4. dataCount.py or dataCountBest.py:
+Uses randomized efficient frontier to find the combination of ETFs with the largest annualized return and the lowest annualized volatility
 
 
 getNames.py uses the website https://etfdb.com/etfs/country/us/ and scrapes data from the table to get the top 1600 ETF names.
 
-  The URL used to scrape the data is not the same as the one shown here because it uses lazyloading (if you open the website, it would take a second or two for the first table to load). The URL shown in getNames.py was obtained through Chrome dev tools (network tab), which could be accessed by right clicking on a site in chrome and then slelecting "Inspect". As far as I know, the inspect function could be disabled by your school or company.
+  The URL used to scrape the data is not the same as the one shown here because it uses lazyloading (if you open the website, it would take a second or two for the first table to load). The URL shown in getNames.py was obtained through Chrome dev tools (network tab), which could be accessed by right clicking on a site in chrome and then slelecting "Inspect". As far as I know, the inspect function could be disabled by your school or company. One way I use it is by waiting for the page to load, then clicking on "page 2" and seeing if anything new pops up. As far as I know, the current link does not work.
   Everything is repeated 65 times because there are a total of 65 pages, each with a small list of ETFs. Because all of the ETFs are repeated several times in the link, we should make sure that it is not the same as the one before it. If it is not, then the result would be printed. If it is, then the result would not be printed and the program will continue with the next ETF that starts with href=\"/etf/, which should be about 12 characters after the first one. After the program is finished running, copy and paste the results into Table.txt.
 
+The printed results:
+![Graph Example Image](https://github.com/Alan6458/Python-ETF-Calculations/blob/main/Images/Names.png?raw=true)
 
 getData.py uses yFinance to get the history of the top 1600 ETFs (from getNames.py) and puts them into CSV files for later use.
 
@@ -38,6 +40,9 @@ ratio.py uses the Calmar ratio (Portfolio Return/Annual Rate of Return) to make 
   The Annual Return is calculated on row 29. After that, some variables are set for calculating the Maximum Drawdown. The location of the higher number, i, is chosen and because the smaller number must be after that, i1, the location of the smaller number, is set to i. An if statement determines if the difference of i and i1 is greater than the current greatest difference. This would take about one to fifteen seconds to calculate, but after that, the maximum drawdown is turned into a percentage and the final result is calculated.
   But, we want the top 100. Another if statement determines if the length of top100 is less than 100, and if so, appends the result to the end. If not, and the result is larger than the smallest value in top100, the smallest value is removed and the result is appended to top100. However, you might notice that there's also a list called "top". This is because we want a record of all the values that has ever been in top100. Because we want only floats in top100 and there's no way to see which float corresponds to which ETF, we would need to append both the result and the name of the ETF to top, but only the result to top100.
   After everything is calculated, we can compare the values from top100 to top. If it matches, the value is put into the list "finalTop", without the value or whitespace. Finally, "finalTop" is written into data.txt.
+
+Results of ratio.py:
+![Graph Example Image](https://github.com/Alan6458/Python-ETF-Calculations/blob/main/Images/Data.png?raw=true)
 
 
 dataCount.py optimizes a portfolio through using efficient frontier (with 10 ETFs at a time), and dataCountBest does the same but with 5 ETFs at a time and only the top 10 ETFs.
